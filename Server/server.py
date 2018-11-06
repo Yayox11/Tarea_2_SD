@@ -12,10 +12,12 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
 
-    def __init__(self,cola,datos_aeropuertos,datos_torre):
+    def __init__(self,cola,datos_aeropuertos,datos_torre,alturas,host_base):
         cola = cola
         datos_aeropuertos = datos_aeropuertos
         datos_torre = datos_torre
+        alturas = alturas
+        host_base = host_base
 
     def SayAltitude(self, request, context):
         response = towercontrol_pb2.AltitudeReply()
@@ -23,11 +25,13 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         return response
 
     def SayLandingTrack(self, request, context):
+        print("Nuevo avion en el aeropuerto")
+        print("Asignando pista de aterrizaje")
+        print("La pista asignada es la 1")
         response = towercontrol_pb2.LandingTrackReply()
-        if len(self.cola) == datos_torre["Pistas_aterrizaje"]:
-            response.message = 0
-        elif len(self.cola) < datos_torre["Pistas_aterrizaje"]:
-            response.message = 1            
+        response.message = 1
+        alturas.add(request.altitude)
+        print(alturas)           
         return response
     
     def SayDepartureTrack(self, request, context):
@@ -38,7 +42,23 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         print("Consultando restricciones de pasajeros y combustible")
         print("La pista asignada a "+request.flightnumber+" es la 2 y altura 5")
         response.track = 2
-        response.height = 5
+        len_alturas = len(list(alturas))
+        if len_alturas == 0:
+            response.height = 1
+            alturas.add(1)
+        else:
+            lista = list(alturas)
+            iters = 0
+            for i in range(len(lista) -1):
+                iters+=1
+                if lista[i+1] - lista[i] > 1:
+                    response.height = lista[i]+1
+                    alturas.add(lista[i]+1)
+            if iters + 1 == len(lista):
+                response.height = lista[-1]+1
+                alturas.add(lista[-1]+1)
+        response.ip = datos_aeropuertos[request.destiny]
+        print(alturas)
         return response
 
     def SayIpRequest(self, request, context):
@@ -48,11 +68,8 @@ cola = []
 datos_torre={}
 datos_aeropuertos={}
 alturas = set()
+host_base = 50051
 
-server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-towercontrol_pb2_grpc.add_TowerServicer_to_server(TowerServicer(cola,datos_aeropuertos,datos_torre), server)
-server.add_insecure_port('[::]:50051')
-server.start()
 try:
     print("Bienvenido a la torre de control")
     ciudad = str(input("[Torre de Control] Nombre del aeropuerto:"))
@@ -61,8 +78,14 @@ try:
     datos_torre["Pistas_aterrizaje"] = cantidad_pistas_aterrijaze
     cantidad_pistas_despuegue = int(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Cantidad de pistas de despegue:"))
     datos_torre["Pistas_despuegue"]=cantidad_pistas_despuegue
-    datos_aeropuertos[datos_torre["Ciudad"]] = ("10.0.0.1",50051)
-    print("El aeropuerto de "+datos_torre["Ciudad"]+"tiene por IP 10.0.0.1")
+    ip = str(input("[Torre de Control] Ingrese IP del aeropuerto:"))
+    datos_aeropuertos[datos_torre["Ciudad"]] = ip
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    towercontrol_pb2_grpc.add_TowerServicer_to_server(TowerServicer(cola,datos_aeropuertos,datos_torre,alturas,host_base), server)
+    values = sum(map(int,ip.strip().split('.')))
+    print(ip+':'+str(host_base+values))
+    server.add_insecure_port("10.6.43.139"+':'+str(host_base+values))
+    server.start()
     flag = True
     while(flag):
         print("[Torre de Control - " + datos_torre["Ciudad"] + "] Para agregar destino presione enter, cualquier otra tecla para continuar")

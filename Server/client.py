@@ -1,25 +1,62 @@
 from concurrent import futures
 import time
+import sys
 
 import grpc
 
 import towercontrol_pb2
 import towercontrol_pb2_grpc
 
-nombre_aerolinea = 'LAN'
-nombre_vuelo = "CAB45"
-torre_inicial = "1.0.0.1"
-destino = "Sao Paulo"
+nombre_aerolinea = ""
+nombre_vuelo = ""
+ip_conexion = ""
+destino = ""
+peso = 0
+carga_combustible = 0
+altura_establecida = 0
 
-channel = grpc.insecure_channel('localhost:50051')
-stub = towercontrol_pb2_grpc.TowerStub(channel)
 
-request_departure = towercontrol_pb2.DepartureTrackRequest(
-    airline=nombre_aerolinea,flightnumber=nombre_vuelo,initialtower=torre_inicial,destiny=destino)
-response = stub.SayDepartureTrack(request_departure)
+print("Bienvenido al vuelo")
+avion = str(input("[Avion] Nombre de la aerolinea y numero de avion:"))
+avion = avion.strip().split()
+nombre_aerolinea = avion[0]
+nombre_vuelo = avion[1]
+peso = int(input("[Avion - " + nombre_vuelo + "] Peso máximo carga [Kg]:"))
+carga_combustible = int(input("[Avion - " + nombre_vuelo + "] Capacidad del tanque de combustible [L]:"))
+ip = str(input("[Avion - "+ nombre_vuelo + "] Torre de control inicial:"))
+ip_conexion = '10.6.43.139' + ':' + str(50051 + sum(map(int,ip.strip().split('.'))))
+print(ip)
+flag = True
+while(flag):
 
-##number = towercontrol_pb2.AltitudeRequest(altitude=6969)
-##response = stub.SayAltitude(number)
+    channel = grpc.insecure_channel(ip_conexion)
+    stub = towercontrol_pb2_grpc.TowerStub(channel)
+    print("[Avion - " + nombre_vuelo + "] Para despegar presione enter, cualquier otra tecla para apagar motores")
+    enter = sys.stdin.readline()
+    if enter == '\n':
+        ciudad_destino = str(input("[Avion - " + nombre_vuelo + "] Ingrese destino:"))
+        request_departure = towercontrol_pb2.DepartureTrackRequest(
+        flightnumber=nombre_vuelo,destiny=ciudad_destino)
+        response = stub.SayDepartureTrack(request_departure)
+        if response.track == 0:
+            print("hay que esperar la wea pero aun no ta gud")
+        print("La pista de despegue es "+str(response.track)+" y la altitud es: "+str(response.height))
+        altura_establecida = response.height
+        print("Volando al destino....")
+        time.sleep(10)
+        ip = response.ip
+        strip = ip.strip().split('.')
+        ip_conexion = '10.6.43.139' + ':' + str(50051 + sum(map(int,strip)))
+        channel = grpc.insecure_channel(ip_conexion)
+        stub = towercontrol_pb2_grpc.TowerStub(channel)
+        request_landing = towercontrol_pb2.LandingTrackRequest(
+            track=1,
+            altitude=altura_establecida
+        )
+        response = stub.SayLandingTrack(request_landing)
+        print("Esperando pista de aterrizaje...")
+        print("La pista asignada es la "+str(response.message))
+
 
 # et voilà
-print(response.track,response.height)
+    print(response.message)
