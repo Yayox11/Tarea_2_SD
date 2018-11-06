@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package towercontrol;
+
+// The greeting service definition.
+service Tower {
+  
+  rpc SayAltitude (AltitudeRequest) returns (AltitudeReply){}
+
+  rpc SayLandingTrack (LandingTrackRequest) returns (LandingTrackReply){}
+
+  rpc SayDepartureTrack (DepartureTrackRequest) returns (DepartureTrackReply){}
+
+  rpc SayIpRequest (IpRequest) returns (IpReply){}
+}
+
+
+message AltitudeRequest {
+  int32 altitude = 1;
+}
+
+// The response message containing the greetings
+message AltitudeReply {
+  int32 message = 1;
+}
+
+message LandingTrackRequest {
+  int32 track = 1;
+}
+
+// The response message containing the greetings
+message LandingTrackReply{
+  int32 message = 1;
+}
+
+message DepartureTrackRequest {
+  int32 track = 1;
+}
+
+// The response message containing the greetings
+message DepartureTrackReply {
+  int32 track = 1;
+  int32 position = 2;
+  string airline = 3;
+  string flightnumber = 4;
+}
+
+message IpRequest {
+  string ip = 1;
+}
+
+// The response message containing the greetings
+message IpReply {
+  int32 altitude = 1;
+  string ip = 2;
+}
