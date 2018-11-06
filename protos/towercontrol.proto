@@ -4,7 +4,7 @@ package towercontrol;
 
 // The greeting service definition.
 service Tower {
-  
+
   rpc SayAltitude (AltitudeRequest) returns (AltitudeReply){}
 
   rpc SayLandingTrack (LandingTrackRequest) returns (LandingTrackReply){}
@@ -34,15 +34,16 @@ message LandingTrackReply{
 }
 
 message DepartureTrackRequest {
-  int32 track = 1;
+  string airline = 1;
+  string flightnumber = 2;
+  string initialtower = 3;
+  string destiny = 4;
 }
 
 // The response message containing the greetings
 message DepartureTrackReply {
   int32 track = 1;
-  int32 position = 2;
-  string airline = 3;
-  string flightnumber = 4;
+  int32 height = 2;
 }
 
 message IpRequest {

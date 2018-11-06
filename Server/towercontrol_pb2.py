@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='towercontrol',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12towercontrol.proto\x12\x0ctowercontrol\"#\n\x0f\x41ltitudeRequest\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\" \n\rAltitudeReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"$\n\x13LandingTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\"$\n\x11LandingTrackReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"&\n\x15\x44\x65partureTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\"]\n\x13\x44\x65partureTrackReply\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x10\n\x08position\x18\x02 \x01(\x05\x12\x0f\n\x07\x61irline\x18\x03 \x01(\t\x12\x14\n\x0c\x66lightnumber\x18\x04 \x01(\t\"\x17\n\tIpRequest\x12\n\n\x02ip\x18\x01 \x01(\t\"\'\n\x07IpReply\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\x12\n\n\x02ip\x18\x02 \x01(\t2\xce\x02\n\x05Tower\x12K\n\x0bSayAltitude\x12\x1d.towercontrol.AltitudeRequest\x1a\x1b.towercontrol.AltitudeReply\"\x00\x12W\n\x0fSayLandingTrack\x12!.towercontrol.LandingTrackRequest\x1a\x1f.towercontrol.LandingTrackReply\"\x00\x12]\n\x11SayDepartureTrack\x12#.towercontrol.DepartureTrackRequest\x1a!.towercontrol.DepartureTrackReply\"\x00\x12@\n\x0cSayIpRequest\x12\x17.towercontrol.IpRequest\x1a\x15.towercontrol.IpReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x12towercontrol.proto\x12\x0ctowercontrol\"#\n\x0f\x41ltitudeRequest\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\" \n\rAltitudeReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"$\n\x13LandingTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\"$\n\x11LandingTrackReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"e\n\x15\x44\x65partureTrackRequest\x12\x0f\n\x07\x61irline\x18\x01 \x01(\t\x12\x14\n\x0c\x66lightnumber\x18\x02 \x01(\t\x12\x14\n\x0cinitialtower\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\"4\n\x13\x44\x65partureTrackReply\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\"\x17\n\tIpRequest\x12\n\n\x02ip\x18\x01 \x01(\t\"\'\n\x07IpReply\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\x12\n\n\x02ip\x18\x02 \x01(\t2\xce\x02\n\x05Tower\x12K\n\x0bSayAltitude\x12\x1d.towercontrol.AltitudeRequest\x1a\x1b.towercontrol.AltitudeReply\"\x00\x12W\n\x0fSayLandingTrack\x12!.towercontrol.LandingTrackRequest\x1a\x1f.towercontrol.LandingTrackReply\"\x00\x12]\n\x11SayDepartureTrack\x12#.towercontrol.DepartureTrackRequest\x1a!.towercontrol.DepartureTrackReply\"\x00\x12@\n\x0cSayIpRequest\x12\x17.towercontrol.IpRequest\x1a\x15.towercontrol.IpReply\"\x00\x62\x06proto3')
 )
 
 
@@ -157,9 +157,30 @@ _DEPARTURETRACKREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='track', full_name='towercontrol.DepartureTrackRequest.track', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='airline', full_name='towercontrol.DepartureTrackRequest.airline', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='flightnumber', full_name='towercontrol.DepartureTrackRequest.flightnumber', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='initialtower', full_name='towercontrol.DepartureTrackRequest.initialtower', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='destiny', full_name='towercontrol.DepartureTrackRequest.destiny', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -176,7 +197,7 @@ _DEPARTURETRACKREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=183,
-  serialized_end=221,
+  serialized_end=284,
 )
 
 
@@ -195,23 +216,9 @@ _DEPARTURETRACKREPLY = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='position', full_name='towercontrol.DepartureTrackReply.position', index=1,
+      name='height', full_name='towercontrol.DepartureTrackReply.height', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='airline', full_name='towercontrol.DepartureTrackReply.airline', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='flightnumber', full_name='towercontrol.DepartureTrackReply.flightnumber', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -227,8 +234,8 @@ _DEPARTURETRACKREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=223,
-  serialized_end=316,
+  serialized_start=286,
+  serialized_end=338,
 )
 
 
@@ -258,8 +265,8 @@ _IPREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=318,
-  serialized_end=341,
+  serialized_start=340,
+  serialized_end=363,
 )
 
 
@@ -296,8 +303,8 @@ _IPREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=343,
-  serialized_end=382,
+  serialized_start=365,
+  serialized_end=404,
 )
 
 DESCRIPTOR.message_types_by_name['AltitudeRequest'] = _ALTITUDEREQUEST
@@ -374,8 +381,8 @@ _TOWER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=385,
-  serialized_end=719,
+  serialized_start=407,
+  serialized_end=741,
   methods=[
   _descriptor.MethodDescriptor(
     name='SayAltitude',
