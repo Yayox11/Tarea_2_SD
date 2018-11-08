@@ -13,9 +13,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "towercontrol.LandingTrackRequest" do
     optional :track, :int32, 1
     optional :altitude, :int32, 2
+    optional :flightnumber, :string, 3
+    optional :destiny, :string, 4
   end
   add_message "towercontrol.LandingTrackReply" do
     optional :message, :int32, 1
+    optional :pos, :int32, 2
+    optional :altitude, :int32, 3
   end
   add_message "towercontrol.DepartureTrackRequest" do
     optional :flightnumber, :string, 1
@@ -25,13 +29,18 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :track, :int32, 1
     optional :height, :int32, 2
     optional :ip, :string, 3
+    optional :port, :string, 4
+    optional :pos, :int32, 5
   end
-  add_message "towercontrol.IpRequest" do
-    optional :ip, :string, 1
+  add_message "towercontrol.FlightsRequest" do
+    optional :message, :int32, 1
   end
-  add_message "towercontrol.IpReply" do
-    optional :altitude, :int32, 1
-    optional :ip, :string, 2
+  add_message "towercontrol.FlightsResponse" do
+    optional :type, :string, 1
+    optional :airport, :string, 2
+    optional :flight, :string, 3
+    optional :destiny, :string, 4
+    optional :track, :int32, 5
   end
 end
 
@@ -42,6 +51,6 @@ module Towercontrol
   LandingTrackReply = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.LandingTrackReply").msgclass
   DepartureTrackRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.DepartureTrackRequest").msgclass
   DepartureTrackReply = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.DepartureTrackReply").msgclass
-  IpRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.IpRequest").msgclass
-  IpReply = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.IpReply").msgclass
+  FlightsRequest = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.FlightsRequest").msgclass
+  FlightsResponse = Google::Protobuf::DescriptorPool.generated_pool.lookup("towercontrol.FlightsResponse").msgclass
 end

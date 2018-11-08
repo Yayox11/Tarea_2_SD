@@ -15,10 +15,9 @@ module Towercontrol
       self.unmarshal_class_method = :decode
       self.service_name = 'towercontrol.Tower'
 
-      rpc :SayAltitude, AltitudeRequest, AltitudeReply
       rpc :SayLandingTrack, LandingTrackRequest, LandingTrackReply
       rpc :SayDepartureTrack, DepartureTrackRequest, DepartureTrackReply
-      rpc :SayIpRequest, IpRequest, IpReply
+      rpc :SayFlights, FlightsRequest, stream(FlightsResponse)
     end
 
     Stub = Service.rpc_stub_class

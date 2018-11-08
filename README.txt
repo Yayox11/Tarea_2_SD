@@ -15,3 +15,5 @@ Comentarios sobre tarea:
 -Para el avión, no se puede consultar en la puerta acaso cumple con las restricciones de combustible y pasajeros.
 -La torre logra consultar los aviones, pero por alguna razón los muestra como undefined, problema que no alcanzamos a resolver.
 -Al comienzo, se debe especificar la IP y el puerto a utilizar, tanto en la torre como en el avión.
+
+Repositorio Github con la tarea: https://github.com/Yayox11/Tarea_2_SD.git

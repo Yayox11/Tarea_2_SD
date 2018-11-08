@@ -73,7 +73,7 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         response.track = track
         response.ip = datos_aeropuertos[request.destiny][0]
         response.port = datos_aeropuertos[request.destiny][1]
-        print("La pista asignada a "+request.flightnumber+" es " + str(track) + " y la altura " + str(alturas))
+        print("La pista asignada a "+request.flightnumber+" es " + str(track) + " y la altura " + str(self.alturas))
         lista_despegue.append(track)
         self.lista_despegando.remove(("despegando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
         self.alturas-=1
