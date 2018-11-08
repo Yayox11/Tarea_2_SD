@@ -119,20 +119,17 @@ try:
     server.start()
     flag = True
     while(flag):
-        print("[Torre de Control - " + datos_torre["Ciudad"] + "] Para agregar destino presione enter, cualquier otra tecla para continuar")
+        print("[Torre de Control - " + datos_torre["Ciudad"] + "] Para agregar destino presione enter, ingrese cualquier otra tecla y presione enter para continuar")
         enter = sys.stdin.readline()
         if enter == '\n':
             ciudad = str(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Ingrese nombre y dirección IP:"))
             list_ciudad = ciudad.strip().split()
             port = str(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Ingrese el puerto de la ciudad:"))
             datos_aeropuertos[" ".join(list_ciudad[:-1])]=(list_ciudad[-1],port)
-            print(datos_aeropuertos.items())
         else:
             print("Aeropuertos añadidos")
             flag=False
-            print(datos_aeropuertos.items())
     while True:
         time.sleep(_ONE_DAY_IN_SECONDS)
-        print("pico")
 except KeyboardInterrupt:
     server.stop(0)
