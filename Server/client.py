@@ -36,8 +36,7 @@ while(flag):
         request_departure = towercontrol_pb2.DepartureTrackRequest(
         flightnumber=nombre_vuelo,destiny=ciudad_destino)
         response = stub.SayDepartureTrack(request_departure)
-        if response.track == 0:
-            print("hay que esperar la wea pero aun no ta gud")
+        print("Estamos en la posición de espera "+str(response.pos))
         print("La pista de despegue es "+str(response.track)+" y la altitud es: "+str(response.height))
         altura_establecida = response.height
         print("Volando al destino....")
@@ -52,8 +51,8 @@ while(flag):
             altitude=altura_establecida
         )
         response = stub.SayLandingTrack(request_landing)
-        print("Esperando pista de aterrizaje...")
-        print("La pista asignada es la "+str(response.message))
+        print("Esperando pista de aterrizaje... nuestra posición en la lista es "+str(response.pos))
+        print("La pista asignada es la "+str(response.message)+ " con altura "+str(response.altitude))
     else:
         print("Apagando motores...")
         flag = False

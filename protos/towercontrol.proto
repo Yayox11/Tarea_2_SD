@@ -32,6 +32,8 @@ message LandingTrackRequest {
 // The response message containing the greetings
 message LandingTrackReply{
   int32 message = 1;
+  int32 pos = 2;
+  int32 altitude = 3;
 }
 
 message DepartureTrackRequest {
@@ -45,6 +47,7 @@ message DepartureTrackReply {
   int32 height = 2;
   string ip = 3;
   string port = 4;
+  int32 pos = 5;
 }
 
 message FlightsRequest{

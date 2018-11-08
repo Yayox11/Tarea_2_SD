@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='towercontrol',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12towercontrol.proto\x12\x0ctowercontrol\"#\n\x0f\x41ltitudeRequest\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\" \n\rAltitudeReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"]\n\x13LandingTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x10\n\x08\x61ltitude\x18\x02 \x01(\x05\x12\x14\n\x0c\x66lightnumber\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\"$\n\x11LandingTrackReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\">\n\x15\x44\x65partureTrackRequest\x12\x14\n\x0c\x66lightnumber\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x02 \x01(\t\"N\n\x13\x44\x65partureTrackReply\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\t\"!\n\x0e\x46lightsRequest\x12\x0f\n\x07message\x18\x01 \x01(\x05\"`\n\x0f\x46lightsResponse\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0f\n\x07\x61irport\x18\x02 \x01(\t\x12\x0e\n\x06\x66light\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\x12\r\n\x05track\x18\x05 \x01(\x05\x32\x8e\x02\n\x05Tower\x12W\n\x0fSayLandingTrack\x12!.towercontrol.LandingTrackRequest\x1a\x1f.towercontrol.LandingTrackReply\"\x00\x12]\n\x11SayDepartureTrack\x12#.towercontrol.DepartureTrackRequest\x1a!.towercontrol.DepartureTrackReply\"\x00\x12M\n\nSayFlights\x12\x1c.towercontrol.FlightsRequest\x1a\x1d.towercontrol.FlightsResponse\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x12towercontrol.proto\x12\x0ctowercontrol\"#\n\x0f\x41ltitudeRequest\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\" \n\rAltitudeReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"]\n\x13LandingTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x10\n\x08\x61ltitude\x18\x02 \x01(\x05\x12\x14\n\x0c\x66lightnumber\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\"C\n\x11LandingTrackReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\x12\x0b\n\x03pos\x18\x02 \x01(\x05\x12\x10\n\x08\x61ltitude\x18\x03 \x01(\x05\">\n\x15\x44\x65partureTrackRequest\x12\x14\n\x0c\x66lightnumber\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x02 \x01(\t\"[\n\x13\x44\x65partureTrackReply\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\t\x12\x0b\n\x03pos\x18\x05 \x01(\x05\"!\n\x0e\x46lightsRequest\x12\x0f\n\x07message\x18\x01 \x01(\x05\"`\n\x0f\x46lightsResponse\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0f\n\x07\x61irport\x18\x02 \x01(\t\x12\x0e\n\x06\x66light\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\x12\r\n\x05track\x18\x05 \x01(\x05\x32\x8e\x02\n\x05Tower\x12W\n\x0fSayLandingTrack\x12!.towercontrol.LandingTrackRequest\x1a\x1f.towercontrol.LandingTrackReply\"\x00\x12]\n\x11SayDepartureTrack\x12#.towercontrol.DepartureTrackRequest\x1a!.towercontrol.DepartureTrackReply\"\x00\x12M\n\nSayFlights\x12\x1c.towercontrol.FlightsRequest\x1a\x1d.towercontrol.FlightsResponse\"\x00\x30\x01\x62\x06proto3')
 )
 
 
@@ -153,6 +153,20 @@ _LANDINGTRACKREPLY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pos', full_name='towercontrol.LandingTrackReply.pos', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='altitude', full_name='towercontrol.LandingTrackReply.altitude', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -166,7 +180,7 @@ _LANDINGTRACKREPLY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=202,
-  serialized_end=238,
+  serialized_end=269,
 )
 
 
@@ -203,8 +217,8 @@ _DEPARTURETRACKREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=240,
-  serialized_end=302,
+  serialized_start=271,
+  serialized_end=333,
 )
 
 
@@ -243,6 +257,13 @@ _DEPARTURETRACKREPLY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pos', full_name='towercontrol.DepartureTrackReply.pos', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -255,8 +276,8 @@ _DEPARTURETRACKREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=304,
-  serialized_end=382,
+  serialized_start=335,
+  serialized_end=426,
 )
 
 
@@ -286,8 +307,8 @@ _FLIGHTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=384,
-  serialized_end=417,
+  serialized_start=428,
+  serialized_end=461,
 )
 
 
@@ -345,8 +366,8 @@ _FLIGHTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=419,
-  serialized_end=515,
+  serialized_start=463,
+  serialized_end=559,
 )
 
 DESCRIPTOR.message_types_by_name['AltitudeRequest'] = _ALTITUDEREQUEST
@@ -423,8 +444,8 @@ _TOWER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=518,
-  serialized_end=788,
+  serialized_start=562,
+  serialized_end=832,
   methods=[
   _descriptor.MethodDescriptor(
     name='SayLandingTrack',
