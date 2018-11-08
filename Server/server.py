@@ -1,6 +1,7 @@
 from concurrent import futures
 import time
 import sys
+from queue import Queue
 
 import grpc
 
@@ -9,15 +10,18 @@ import towercontrol_pb2_grpc
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
-
 class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
 
-    def __init__(self,cola,datos_aeropuertos,datos_torre,alturas,host_base):
-        cola = cola
+    def __init__(self,datos_aeropuertos,datos_torre,alturas,lista_aterrijaze,lista_despegue,lista_aterrizando,lista_despegando,queue_aterrizando,queue_despegando):
         datos_aeropuertos = datos_aeropuertos
         datos_torre = datos_torre
         alturas = alturas
-        host_base = host_base
+        self.queue_aterrizando = queue_aterrizando
+        self.queue_despegando = queue_despegando
+        self.lista_aterrijaze = lista_aterrijaze
+        self.lista_despegue = lista_despegue
+        self.lista_despegando = lista_despegando
+        self.lista_aterrizando = lista_aterrizando
 
     def SayAltitude(self, request, context):
         response = towercontrol_pb2.AltitudeReply()
@@ -27,11 +31,21 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
     def SayLandingTrack(self, request, context):
         print("Nuevo avion en el aeropuerto")
         print("Asignando pista de aterrizaje")
-        print("La pista asignada es la 1")
+        if len(self.lista_aterrijaze) == 0:
+            self.queue_aterrizando.put(request,True)
+            while(True):
+                if len(self.lista_aterrijaze) != 0:
+                    request = queue_aterrizando.get(True)
+                    break
+        track = self.lista_aterrijaze.pop(0)
+        self.lista_aterrizando.append(("aterrizando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
+        time.sleep(2)
+        print("La pista asignada es " + str(track))
         response = towercontrol_pb2.LandingTrackReply()
-        response.message = 1
+        response.message = track
         alturas.add(request.altitude)
-        print(alturas)           
+        self.lista_aterrijaze.append(track)
+        self.lista_aterrizando.remove(("aterrizando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))           
         return response
     
     def SayDepartureTrack(self, request, context):
@@ -40,11 +54,20 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         print("Consultando destino...")
         print("Enviando dirección de "+ request.destiny)
         print("Consultando restricciones de pasajeros y combustible")
-        print("La pista asignada a "+request.flightnumber+" es la 2 y altura 5")
-        response.track = 2
+        if len(lista_despegue) == 0:
+            self.queue_despegando.put(request,True)
+            while(True):
+                if len(lista_despegue) != 0:
+                    request = queue_despegando.get(True)
+                    break
+        track = self.lista_despegue.pop(0)
+        self.lista_despegando.append(("despegando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
+        time.sleep(2)
+        response.track = track
+        height = 0
         len_alturas = len(list(alturas))
         if len_alturas == 0:
-            response.height = 1
+            height = 1
             alturas.add(1)
         else:
             lista = list(alturas)
@@ -52,19 +75,30 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
             for i in range(len(lista) -1):
                 iters+=1
                 if lista[i+1] - lista[i] > 1:
-                    response.height = lista[i]+1
+                    height = lista[i]+1
                     alturas.add(lista[i]+1)
             if iters + 1 == len(lista):
-                response.height = lista[-1]+1
+                height = lista[-1]+1
                 alturas.add(lista[-1]+1)
-        response.ip = datos_aeropuertos[request.destiny]
-        print(alturas)
+        response.ip = datos_aeropuertos[request.destiny][0]
+        response.port = datos_aeropuertos[request.destiny][1]
+        response.height = height
+        print("La pista asignada a "+request.flightnumber+" es " + str(track) + " y la altura " + str(height))
+        lista_despegue.append(track)
+        self.lista_despegando.remove(("despegando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
         return response
 
-    def SayIpRequest(self, request, context):
-        return towercontrol_pb2.IpReply(altitude=1000,ip="10.0.0.1")
+    def SayFlights(self, request, context):
+        total_lists = self.lista_despegando + self.lista_despegando
+        for element in total_lists:
+            response = towercontrol_pb2.FlightsResponse()
+            response.type = element[0]
+            response.airport = element[1]
+            response.flight = element[2]
+            response.destiny = element[3]
+            response.track = element[4]
+            yield response 
 
-cola = []
 datos_torre={}
 datos_aeropuertos={}
 alturas = set()
@@ -76,15 +110,21 @@ try:
     datos_torre["Ciudad"]=ciudad
     cantidad_pistas_aterrijaze = int(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Cantidad de pistas de aterrizaje:"))
     datos_torre["Pistas_aterrizaje"] = cantidad_pistas_aterrijaze
-    cantidad_pistas_despuegue = int(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Cantidad de pistas de despegue:"))
-    datos_torre["Pistas_despuegue"]=cantidad_pistas_despuegue
-    ip = str(input("[Torre de Control] Ingrese IP del aeropuerto:"))
-    datos_aeropuertos[datos_torre["Ciudad"]] = ip
+    cantidad_pistas_despegue = int(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Cantidad de pistas de despegue:"))
+    datos_torre["Pistas_despuegue"]=cantidad_pistas_despegue
+    ip_torre = str(input("[Torre de Control] Ingrese IP del aeropuerto:"))
+    port_torre = str(input("[Torre de Control] Ingrese el puerto:"))
+    lista_aterrijaze = list(range(1,cantidad_pistas_aterrijaze + 1))
+    lista_despegue = list(range(1,cantidad_pistas_despegue + 1))
+    datos_aeropuertos[datos_torre["Ciudad"]] = (ip_torre,port_torre)
+    queue_despegando = Queue()
+    queue_aterrizando = Queue()
+    lista_aterrizando = []
+    lista_despegando = []
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    towercontrol_pb2_grpc.add_TowerServicer_to_server(TowerServicer(cola,datos_aeropuertos,datos_torre,alturas,host_base), server)
-    values = sum(map(int,ip.strip().split('.')))
-    print(ip+':'+str(host_base+values))
-    server.add_insecure_port("10.6.43.139"+':'+str(host_base+values))
+    towercontrol_pb2_grpc.add_TowerServicer_to_server(
+        TowerServicer(datos_aeropuertos,datos_torre,alturas,lista_aterrijaze,lista_despegue,lista_aterrizando,lista_despegando,queue_aterrizando,queue_despegando), server)
+    server.add_insecure_port(ip_torre+':'+port_torre)
     server.start()
     flag = True
     while(flag):
@@ -93,7 +133,8 @@ try:
         if enter == '\n':
             ciudad = str(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Ingrese nombre y dirección IP:"))
             list_ciudad = ciudad.strip().split()
-            datos_aeropuertos[" ".join(list_ciudad[:-1])]=list_ciudad[-1]
+            port = str(input("[Torre de Control - " + datos_torre["Ciudad"] + "] Ingrese el puerto de la ciudad:"))
+            datos_aeropuertos[" ".join(list_ciudad[:-1])]=(list_ciudad[-1],port)
             print(datos_aeropuertos.items())
         else:
             print("Aeropuertos añadidos")

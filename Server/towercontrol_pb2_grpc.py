@@ -29,10 +29,10 @@ class TowerStub(object):
         request_serializer=towercontrol__pb2.DepartureTrackRequest.SerializeToString,
         response_deserializer=towercontrol__pb2.DepartureTrackReply.FromString,
         )
-    self.SayIpRequest = channel.unary_unary(
-        '/towercontrol.Tower/SayIpRequest',
-        request_serializer=towercontrol__pb2.IpRequest.SerializeToString,
-        response_deserializer=towercontrol__pb2.IpReply.FromString,
+    self.SayFlights = channel.unary_stream(
+        '/towercontrol.Tower/SayFlights',
+        request_serializer=towercontrol__pb2.FlightsRequest.SerializeToString,
+        response_deserializer=towercontrol__pb2.FlightsResponse.FromString,
         )
 
 
@@ -61,7 +61,7 @@ class TowerServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def SayIpRequest(self, request, context):
+  def SayFlights(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -86,10 +86,10 @@ def add_TowerServicer_to_server(servicer, server):
           request_deserializer=towercontrol__pb2.DepartureTrackRequest.FromString,
           response_serializer=towercontrol__pb2.DepartureTrackReply.SerializeToString,
       ),
-      'SayIpRequest': grpc.unary_unary_rpc_method_handler(
-          servicer.SayIpRequest,
-          request_deserializer=towercontrol__pb2.IpRequest.FromString,
-          response_serializer=towercontrol__pb2.IpReply.SerializeToString,
+      'SayFlights': grpc.unary_stream_rpc_method_handler(
+          servicer.SayFlights,
+          request_deserializer=towercontrol__pb2.FlightsRequest.FromString,
+          response_serializer=towercontrol__pb2.FlightsResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

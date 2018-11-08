@@ -11,7 +11,7 @@ service Tower {
 
   rpc SayDepartureTrack (DepartureTrackRequest) returns (DepartureTrackReply){}
 
-  rpc SayIpRequest (IpRequest) returns (IpReply){}
+  rpc SayFlights (FlightsRequest) returns (stream FlightsResponse){}
 }
 
 
@@ -27,6 +27,8 @@ message AltitudeReply {
 message LandingTrackRequest {
   int32 track = 1;
   int32 altitude = 2;
+  string flightnumber = 3;
+  string destiny = 4;
 }
 
 // The response message containing the greetings
@@ -44,14 +46,17 @@ message DepartureTrackReply {
   int32 track = 1;
   int32 height = 2;
   string ip = 3;
+  string port = 4;
 }
 
-message IpRequest {
-  string ip = 1;
-}
+message FlightsRequest{
+  int32 message = 1;
+} 
 
-// The response message containing the greetings
-message IpReply {
-  int32 altitude = 1;
-  string ip = 2;
+message FlightsResponse{
+  string type = 1;
+  string airport = 2;
+  string flight = 3;
+  string destiny = 4;
+  int32 track = 5;
 }
