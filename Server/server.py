@@ -27,7 +27,6 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         response = towercontrol_pb2.LandingTrackReply()
         self.alturas +=1
         response.altitude = self.alturas
-        self.lista_aterrizando.append(("aterrizando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
         print("Nuevo avion en el aeropuerto")
         print("Asignando pista de aterrizaje")
         if len(self.lista_aterrijaze) == 0:
@@ -41,6 +40,7 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         else:
             response.pos = 0
         track = self.lista_aterrijaze.pop(0)
+        self.lista_aterrizando.append(("aterrizando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
         time.sleep(5)
         print("La pista asignada es " + str(track))
         response.message = track
@@ -53,7 +53,6 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         response = towercontrol_pb2.DepartureTrackReply()
         self.alturas+=1
         response.height = self.alturas
-        self.lista_despegando.append(("despegando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
         print("Torre de control - " + datos_torre["Ciudad"] +"] Avion" + request.flightnumber + "quiere despegar")
         print("Consultando destino...")
         print("Enviando dirección de "+ request.destiny)
@@ -69,6 +68,7 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         else:
             response.pos = 0
         track = self.lista_despegue.pop(0)
+        self.lista_despegando.append(("despegando",datos_torre['Ciudad'],request.flightnumber,request.destiny,track))
         time.sleep(5)
         response.track = track
         response.ip = datos_aeropuertos[request.destiny][0]
