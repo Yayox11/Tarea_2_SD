@@ -33,22 +33,24 @@ Protocolos:
 		Avión <---------|	altura;		|
 	      			|	ip;		|
 				|	puerto;		|
+				|	posicion;	|
 				|- - - - - - - - - - - -| 
 		
 		Este protocolo se activa cuando un avión quiere realizar
 		un despegue desde cierto aeropuerto. Para esto, envía un
 		mensaje a la torre de control correspondiente indicando
 		su numero de vuelo y el destino. El servidor busca la
-		información de la ip y el puerto correspondiente a esa
-		ciudad y en caso de que no tenga pistas libres, encola
-		al avión y bloquea el proceso hasta que se libera una 
-		pista. Una vez se libera alguna pista, comienza el proceso
-		de despegue. Se esperan 2 segundos que seria el tiempo de
-		"despegue", que en la realidad es mucho más y luego la
-		torre de control le envía la pista correspondiente al avión
-		junto con la altura a la que debe volar, la ip y el puerto del
-		aeropuerto de destino. El avión recibe este mensaje y comienza
-		el vuelo que dura 10 segundos.
+		información de la ip, el puerto correspondiente a esa
+		ciudad y la posición en la cola, en caso de que no hayan pistas
+		disponibles, encola al avión y bloquea el proceso hasta 
+		que se libera una pista. Una vez se libera alguna pista, 
+		comienza el proceso de despegue. Se esperan 2 segundos 
+		que seria el tiempo de "despegue", que en la realidad es mucho 
+		más y luego la torre de control le envía la pista correspondiente 
+		al avión junto con la altura a la que debe volar, la ip y el 
+		puerto del aeropuerto de destino. 
+		El avión recibe este mensaje y comienza el vuelo que dura 10 
+		segundos.
 
 	- SayLandingTrack
 				| - - - - - - - - - - - |
@@ -61,7 +63,9 @@ Protocolos:
 								|
 				| - - - - - - - - - - - |	|
 				| message{		|	|
-				|	pista;		|<- - - -
+				|	pista;		|	|
+				|	posición;	|	|
+				|	altutid;	|<- - - -
 		Avión <---------|			|
 				|- - - - - - - - - - - -| 
 		
@@ -69,8 +73,9 @@ Protocolos:
 		Este protocolo comienza cuando un avión llega al aeropuerto de
 		destino y quiere comenzar el proceso de aterrizaje. La torre de
 		de control reconoce que hay un avión esperando aterrizar por lo 
-		que le asigna una pista, de haber una disponible, esta es
-		comunicada al avión y se realiza el aterrizaje.
+		que le asigna una pista y una altitud, de haber una disponible, esta es
+		comunicada al avión y se realiza el aterrizaje. Además se comunica
+		la posición de espera en la cola.
 
 	- SayFlightsRequest
 				| - - - - - - - - - - - |
