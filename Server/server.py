@@ -23,11 +23,6 @@ class TowerServicer(towercontrol_pb2_grpc.TowerServicer):
         self.lista_despegando = lista_despegando
         self.lista_aterrizando = lista_aterrizando
 
-    def SayAltitude(self, request, context):
-        response = towercontrol_pb2.AltitudeReply()
-        response.message = request.altitude
-        return response
-
     def SayLandingTrack(self, request, context):
         print("Nuevo avion en el aeropuerto")
         print("Asignando pista de aterrizaje")

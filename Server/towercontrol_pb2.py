@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='towercontrol',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x12towercontrol.proto\x12\x0ctowercontrol\"#\n\x0f\x41ltitudeRequest\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\" \n\rAltitudeReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"]\n\x13LandingTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x10\n\x08\x61ltitude\x18\x02 \x01(\x05\x12\x14\n\x0c\x66lightnumber\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\"$\n\x11LandingTrackReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\">\n\x15\x44\x65partureTrackRequest\x12\x14\n\x0c\x66lightnumber\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x02 \x01(\t\"N\n\x13\x44\x65partureTrackReply\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\t\"!\n\x0e\x46lightsRequest\x12\x0f\n\x07message\x18\x01 \x01(\x05\"`\n\x0f\x46lightsResponse\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0f\n\x07\x61irport\x18\x02 \x01(\t\x12\x0e\n\x06\x66light\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\x12\r\n\x05track\x18\x05 \x01(\x05\x32\xdb\x02\n\x05Tower\x12K\n\x0bSayAltitude\x12\x1d.towercontrol.AltitudeRequest\x1a\x1b.towercontrol.AltitudeReply\"\x00\x12W\n\x0fSayLandingTrack\x12!.towercontrol.LandingTrackRequest\x1a\x1f.towercontrol.LandingTrackReply\"\x00\x12]\n\x11SayDepartureTrack\x12#.towercontrol.DepartureTrackRequest\x1a!.towercontrol.DepartureTrackReply\"\x00\x12M\n\nSayFlights\x12\x1c.towercontrol.FlightsRequest\x1a\x1d.towercontrol.FlightsResponse\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x12towercontrol.proto\x12\x0ctowercontrol\"#\n\x0f\x41ltitudeRequest\x12\x10\n\x08\x61ltitude\x18\x01 \x01(\x05\" \n\rAltitudeReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\"]\n\x13LandingTrackRequest\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x10\n\x08\x61ltitude\x18\x02 \x01(\x05\x12\x14\n\x0c\x66lightnumber\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\"$\n\x11LandingTrackReply\x12\x0f\n\x07message\x18\x01 \x01(\x05\">\n\x15\x44\x65partureTrackRequest\x12\x14\n\x0c\x66lightnumber\x18\x01 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x02 \x01(\t\"N\n\x13\x44\x65partureTrackReply\x12\r\n\x05track\x18\x01 \x01(\x05\x12\x0e\n\x06height\x18\x02 \x01(\x05\x12\n\n\x02ip\x18\x03 \x01(\t\x12\x0c\n\x04port\x18\x04 \x01(\t\"!\n\x0e\x46lightsRequest\x12\x0f\n\x07message\x18\x01 \x01(\x05\"`\n\x0f\x46lightsResponse\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0f\n\x07\x61irport\x18\x02 \x01(\t\x12\x0e\n\x06\x66light\x18\x03 \x01(\t\x12\x0f\n\x07\x64\x65stiny\x18\x04 \x01(\t\x12\r\n\x05track\x18\x05 \x01(\x05\x32\x8e\x02\n\x05Tower\x12W\n\x0fSayLandingTrack\x12!.towercontrol.LandingTrackRequest\x1a\x1f.towercontrol.LandingTrackReply\"\x00\x12]\n\x11SayDepartureTrack\x12#.towercontrol.DepartureTrackRequest\x1a!.towercontrol.DepartureTrackReply\"\x00\x12M\n\nSayFlights\x12\x1c.towercontrol.FlightsRequest\x1a\x1d.towercontrol.FlightsResponse\"\x00\x30\x01\x62\x06proto3')
 )
 
 
@@ -424,21 +424,12 @@ _TOWER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   serialized_start=518,
-  serialized_end=865,
+  serialized_end=788,
   methods=[
-  _descriptor.MethodDescriptor(
-    name='SayAltitude',
-    full_name='towercontrol.Tower.SayAltitude',
-    index=0,
-    containing_service=None,
-    input_type=_ALTITUDEREQUEST,
-    output_type=_ALTITUDEREPLY,
-    serialized_options=None,
-  ),
   _descriptor.MethodDescriptor(
     name='SayLandingTrack',
     full_name='towercontrol.Tower.SayLandingTrack',
-    index=1,
+    index=0,
     containing_service=None,
     input_type=_LANDINGTRACKREQUEST,
     output_type=_LANDINGTRACKREPLY,
@@ -447,7 +438,7 @@ _TOWER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='SayDepartureTrack',
     full_name='towercontrol.Tower.SayDepartureTrack',
-    index=2,
+    index=1,
     containing_service=None,
     input_type=_DEPARTURETRACKREQUEST,
     output_type=_DEPARTURETRACKREPLY,
@@ -456,7 +447,7 @@ _TOWER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='SayFlights',
     full_name='towercontrol.Tower.SayFlights',
-    index=3,
+    index=2,
     containing_service=None,
     input_type=_FLIGHTSREQUEST,
     output_type=_FLIGHTSRESPONSE,

@@ -14,11 +14,6 @@ class TowerStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.SayAltitude = channel.unary_unary(
-        '/towercontrol.Tower/SayAltitude',
-        request_serializer=towercontrol__pb2.AltitudeRequest.SerializeToString,
-        response_deserializer=towercontrol__pb2.AltitudeReply.FromString,
-        )
     self.SayLandingTrack = channel.unary_unary(
         '/towercontrol.Tower/SayLandingTrack',
         request_serializer=towercontrol__pb2.LandingTrackRequest.SerializeToString,
@@ -39,13 +34,6 @@ class TowerStub(object):
 class TowerServicer(object):
   """The greeting service definition.
   """
-
-  def SayAltitude(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
 
   def SayLandingTrack(self, request, context):
     # missing associated documentation comment in .proto file
@@ -71,11 +59,6 @@ class TowerServicer(object):
 
 def add_TowerServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'SayAltitude': grpc.unary_unary_rpc_method_handler(
-          servicer.SayAltitude,
-          request_deserializer=towercontrol__pb2.AltitudeRequest.FromString,
-          response_serializer=towercontrol__pb2.AltitudeReply.SerializeToString,
-      ),
       'SayLandingTrack': grpc.unary_unary_rpc_method_handler(
           servicer.SayLandingTrack,
           request_deserializer=towercontrol__pb2.LandingTrackRequest.FromString,

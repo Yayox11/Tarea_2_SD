@@ -5,8 +5,6 @@ package towercontrol;
 // The greeting service definition.
 service Tower {
 
-  rpc SayAltitude (AltitudeRequest) returns (AltitudeReply){}
-
   rpc SayLandingTrack (LandingTrackRequest) returns (LandingTrackReply){}
 
   rpc SayDepartureTrack (DepartureTrackRequest) returns (DepartureTrackReply){}
